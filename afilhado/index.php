@@ -6,7 +6,8 @@ if (!isset($_SESSION['afilhado'])) {
     header("Location: login.php");
     exit;
 }
-require_once "functions.php";
+require_once __DIR__ . '/../api/functions.php';
+require_once __DIR__ . '/../api/bootstrap.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="light" id="html-tag">
@@ -15,8 +16,8 @@ require_once "functions.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programa Jovem Mecânico</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <link href="../assets/css/daisyui.min.css?v=1.1" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <style>
@@ -69,15 +70,19 @@ require_once "functions.php";
             case "avaliar":
                 include("pages/avaliar.php");
             break; 
-            case "responder":
-                $responder = responder([
-                    'quem_avalia' => $_SESSION['afilhado']['afilhado_id'],
+            case "responder": 
+                $dados = [
+                    'quem_avalia' => $_SESSION['padrinho']['padrinho_id'],
+                    'avaliado' => $_POST['avaliado'],
                     'avaliacao' => $_POST['avaliacao_id'],
                     'pergunta' => $_POST['pergunta_atual_id'],
-                    'resposta' => $_POST['resposta']
-                ]);
+                    'categoria' => $_POST['pergunta_categoria'],
+                    'resposta' => htmlspecialchars($_POST['resposta'])
+                ];
+                
+                $retorno = AvaliacaoModel::responderAvaliacao($dados);
 
-                if($responder) {
+                if($retorno === true) {
                     echo "<script>window.location.href = \"index.php?pagina=avaliar&origem=" . encrypt($_POST['avaliacao_id']) . "&status=success&msg=Resposta registrada com sucesso!\";</script>";
                 } else {
                     echo "<script>window.location.href = \"index.php?pagina=avaliar&origem=" . encrypt($_POST['avaliacao_id']) . "&status=error&msg=Erro ao registrar resposta.\";</script>";

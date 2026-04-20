@@ -1,7 +1,7 @@
 <?php
-$avaliacoes = retornarLista("SELECT * FROM avaliacao WHERE quem_avalia = 'padrinho' AND padrinho_id = {$_SESSION['padrinho']['padrinho_id']} ORDER BY id DESC");
+$avaliacoes = GlobalModel::retornarUmaLista("SELECT * FROM avaliacao WHERE quem_avalia = 'padrinho' AND padrinho_id = {$_SESSION['padrinho']['padrinho_id']} ORDER BY id DESC");
 ?>
-<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+<div class="overflow-x-auto rounded-box bg-base-100 shadow-xl rounded-lg">
   <table class="table min-w-full table-auto">
     <!-- head -->
     <thead>
@@ -21,7 +21,7 @@ $avaliacoes = retornarLista("SELECT * FROM avaliacao WHERE quem_avalia = 'padrin
                 <?php
                     $data_realizacao = $avaliacao['realizada'] ? $avaliacao['realizada'] : false;
                     $avaliado = [
-                        'nome' => retornarUmValor("SELECT nome FROM afilhados WHERE id = {$avaliacao['afilhado_id']}"),
+                        'nome' => GlobalModel::retornarUmValor("SELECT nome FROM afilhados WHERE id = {$avaliacao['afilhado_id']}"),
                         'foto' => getFotoAfilhado($avaliacao['afilhado_id']),
                         'badge' => 'AFILHADO'
                     ];
@@ -39,7 +39,6 @@ $avaliacoes = retornarLista("SELECT * FROM avaliacao WHERE quem_avalia = 'padrin
                 <td>
                     <div class="">
                         <div class="avatar indicator">
-                            <span class="indicator-item badge badge-xs badge-neutral" style="left:20px !important;"><?= $avaliado['badge'] ?></span>
                             <div class="w-8 rounded-full"><img src="<?= $avaliado['foto'] ?>" /></div>
                         </div>
                         <span><?= $avaliado['nome'] ?></span>

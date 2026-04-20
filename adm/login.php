@@ -5,7 +5,7 @@ if (isset($_SESSION['adm'])) {
     header("Location: index.php?pagina=bem-vindo");
     exit;
 }
-require_once "functions.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="light" id="html-tag">
@@ -14,8 +14,8 @@ require_once "functions.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programa Jovem Mecânico</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <link href="../assets/css/daisyui.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <style>
@@ -30,7 +30,10 @@ require_once "functions.php";
 
     <!-- Card de Login -->
     <div class="card bg-base-100 shadow-2xl pt-4">
-        <img src="../assets/img/login-arte.jpg">
+        <div class="w-full flex justify-center">
+            <a href="../index.php" class="btn btn-sm btn-neutral"><i class="fa fa-home"></i> Início</a>
+        </div>
+        <span class="font-semibold w-full text-center p-2 text-lg"><i class="fa fa-user"></i> Painel de Controle Adm</span>
         
       <div class="card-body pt-0">
   <?php
@@ -43,7 +46,7 @@ require_once "functions.php";
 
             if ($user === 'admlaguna' && $senha === 'usina@laguna@jm2026') {
                 $_SESSION['adm'] = true;
-                echo "<script>window.location.href = \"index.php?pagina=bem-vindo\";</script>";
+                echo "<script>window.location.href = \"index.php?pagina=afilhados\";</script>";
 
             } else {
                 ?>

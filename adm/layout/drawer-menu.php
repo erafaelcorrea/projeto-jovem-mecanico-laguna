@@ -20,11 +20,9 @@
     <ul class="menu p-4 flex-1">
         <?php 
         $menu = [
-            ['pagina' => 'bem-vindo', 'label' => 'Bem-Vindo', 'icone'=> 'home'],
-            ['pagina' => 'padrinhos', 'label' => 'Padrinhos', 'icone'=> 'users'],
             ['pagina' => 'afilhados', 'label' => 'Jovens Mecânicos', 'icone'=> 'users'],
+            ['pagina' => 'padrinhos', 'label' => 'Padrinhos', 'icone'=> 'users'],
             ['pagina' => 'perguntas', 'label' => 'Perguntas', 'icone'=> 'question'],
-            ['pagina' => 'avaliacoes', 'label' => 'Gerenciar Avaliações', 'icone'=> 'file-text'],
             ['pagina' => 'sair', 'label' => 'Sair', 'icone'=> 'sign-out']
         ];
 

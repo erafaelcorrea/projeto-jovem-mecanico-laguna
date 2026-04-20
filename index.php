@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programa Jovem Mecânico</title>
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
-    <link href="assets/css/daisyui.min.css?v=1.1" rel="stylesheet" type="text/css" />
-    <link href="assets/css/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <style>
@@ -17,7 +17,10 @@
     </style>
 </head>
 <body class="bg-[#3f4295] min-h-screen flex items-center justify-center">
-
+  <div class="absolute bottom-2 right-2 flex gap-2">
+    <a href="adm/index.php" class="btn btn-sm btn-neutral mb-4"><i class="fa fa-industry"></i></a>
+    <a href="instrutor/index.php" class="btn btn-sm btn-neutral mb-4"><i class="fa fa-book"></i></a>
+  </div>
   <div class="w-full max-w-md px-4">
 
     <!-- Card de Login -->

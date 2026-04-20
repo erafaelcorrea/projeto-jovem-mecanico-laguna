@@ -1,9 +1,19 @@
 padrinhos /
-    criar no menu avaliaçoes e mostrar todas as avaliaçoes do padrinho
+    
 
 
 adm/
     antes de vincular-afilhado verificar se o afilhado já tem vinculo no momento
-    
+
+    avaliacoes sem batizado pode haver problemas?   OK
+        (Agora antes criar avaliacao verifica se tem batizado)
+
+
+
+
+
+atualizar-servidor/
+    adm/index.php
+    api/functions.php
 
 

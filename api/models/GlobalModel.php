@@ -1,10 +1,8 @@
 <?php
 
-require_once 'core/Database.php';
-
 class GlobalModel
 {
-    public static function executarsqlReturnAssoc($sql)
+    public static function retornarUmValor($sql)
     {
         $db = Database::connect();
 
@@ -30,7 +28,7 @@ class GlobalModel
         return $result ? array_values($result)[0] : null;
     }
 
-    public static function executarSqlReturnObject($sql)
+    public static function RetornarUmObjeto($sql)
     {
         $db = Database::connect();
 
@@ -57,7 +55,7 @@ class GlobalModel
         return $result ?: null;
     }
 
-    public static function executarsqlReturnArrayList($sql)
+    public static function retornarUmaLista($sql)
     {
         $db = Database::connect();
 
@@ -84,27 +82,33 @@ class GlobalModel
         return $result ?: [];
     }
 
-    public static function executarCriarAvaliacao($data)
+    public static function criarAvaliacao($data)
     {
-        $db = Database::connect();
+        try {
+            $db = Database::connect();
 
-        $sql = "INSERT INTO avaliacao 
-                (quem_avalia, padrinho_id, afilhado_id, liberar)
-                VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO avaliacao 
+                    (quem_avalia, padrinho_id, afilhado_id, liberar)
+                    VALUES (?, ?, ?, ?)";
 
-        $stmt = $db->prepare($sql);
+            $stmt = $db->prepare($sql);
 
-        $executado = $stmt->execute([
-            $data['quem_avalia'],
-            $data['padrinho_id'],
-            $data['afilhado_id'],
-            $data['liberar']
-        ]);
+            $executado = $stmt->execute([
+                $data['quem_avalia'],
+                $data['padrinho_id'],
+                $data['afilhado_id'],
+                $data['liberar']
+            ]);
 
-        return $executado ? true : false;
+            return $executado ? true : false;
+
+        } catch (PDOException $e) {
+            return $e->getMessage();
+            exit;
+        }
     }
 
-    public static function executarExcluirAvaliacao($data)
+    public static function excluirAvaliacao($data)
     {
         $db = Database::connect();
 
@@ -120,7 +124,23 @@ class GlobalModel
         return $executado ? true : false;
     }
 
-    public static function insertResposta($quem_avalia, $avaliacao, $pergunta, $resposta)
+    public static function excluirAvaliacaoInstrutor($data)
+    {
+        $db = Database::connect();
+
+        $sql = "DELETE FROM avaliacao_instrutor 
+                WHERE id = ?";
+
+        $stmt = $db->prepare($sql);
+
+        $executado = $stmt->execute([
+            $data['avaliacao_id']
+        ]);
+
+        return $executado ? true : false;
+    }
+
+    public static function responderAvaliacao($dados)
     {
         $db = Database::connect();
 
@@ -134,10 +154,10 @@ class GlobalModel
         $hora = date('H:i:s');
 
         $executado = $stmt->execute([
-            $quem_avalia,
-            $avaliacao,
-            $pergunta,
-            $resposta,
+            $dados['quem_avalia'],
+            $dados['avaliacao'],
+            $dados['pergunta'],
+            $dados['resposta'],
             $data,
             $hora
         ]);
@@ -145,7 +165,32 @@ class GlobalModel
         return $executado ? true : false;
     }
 
-    public static function executarsqlUpdate($sql)
+    public static function responderAvaliacaoInstrutor($dados)
+    {
+        $db = Database::connect();
+
+        $sql = "INSERT INTO respostas_instrutor 
+                (instrutor, avaliacao, pergunta, resposta, data, hora)
+                VALUES (?, ?, ?, ?, ?, ?)";
+
+        $stmt = $db->prepare($sql);
+
+        $data = date('Y-m-d');
+        $hora = date('H:i:s');
+
+        $executado = $stmt->execute([
+            $dados['instrutor'],
+            $dados['avaliacao'],
+            $dados['pergunta'],
+            $dados['resposta'],
+            $data,
+            $hora
+        ]);
+
+        return $executado ? true : false;
+    }
+
+    public static function atualizarBanco($sql)
     {
         $db = Database::connect();
 
@@ -176,66 +221,7 @@ class GlobalModel
         }
     }
 
-    public static function executarUpdatePergunta($data)
-    {
-        try {
-            $db = Database::connect();
-
-            $sql = "UPDATE perguntas SET 
-                pergunta = :pergunta,
-                descricao = :descricao,
-                modo = :modo,
-                perfil = :perfil,
-                categoria = :categoria,
-                subcategoria = :subcategoria
-                WHERE id = :id";
-
-            $stmt = $db->prepare($sql);
-
-            $stmt->bindParam(':id', $data['id']);
-            $stmt->bindParam(':pergunta', $data['pergunta']);
-            $stmt->bindParam(':descricao', $data['descricao']);
-            $stmt->bindParam(':modo', $data['modo']);
-            $stmt->bindParam(':perfil', $data['perfil']);
-            $stmt->bindParam(':categoria', $data['categoria']);
-            $stmt->bindParam(':subcategoria', $data['subcategoria']);
-
-            $stmt->execute();
-            return $stmt->rowCount();
-
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public static function executarAdicionarPergunta($data)
-    {
-        try {
-            $db = Database::connect();
-
-            $sql = "INSERT INTO perguntas 
-                (pergunta, descricao, modo, perfil, categoria, subcategoria)
-                VALUES (:pergunta, :descricao, :modo, :perfil, :categoria, :subcategoria)";
-
-            $stmt = $db->prepare($sql);
-
-            $executado = $stmt->execute([
-                ':pergunta' => $data['pergunta'],
-                ':descricao' => $data['descricao'],
-                ':modo' => $data['modo'],
-                ':perfil' => $data['perfil'],
-                ':categoria' => $data['categoria'],
-                ':subcategoria' => $data['subcategoria']
-            ]);
-
-            return $executado ? true : false;
-
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public static function executarSalvarVinculo($data)
+    public static function salvarVinculo($data)
     {
         try {
             $db = Database::connect();
@@ -260,78 +246,4 @@ class GlobalModel
         }
     }
 
-    /*
-    public static function executarSalvarVinculo($data)
-    {
-        try {
-            $db = Database::connect(); 
-
-            // Inicia transação
-            $db->beginTransaction();
-
-            $sql = "INSERT INTO batizado 
-                (inicio, fim, padrinho, afilhado)
-                VALUES (:inicio, :fim, :padrinho, :afilhado)";
-
-            $stmt = $db->prepare($sql);
-
-            $executado = $stmt->execute([
-                ':inicio' => $data['inicio'],
-                ':fim' => $data['fim'],
-                ':padrinho' => $data['padrinho_id'],
-                ':afilhado' => $data['afilhado_id']
-            ]);
-
-            if (!$executado) {
-                $db->rollBack();
-                return false;
-            }
-
-            $batizado = $db->lastInsertId();
-
-            if (!$batizado) {
-                $db->rollBack();
-                return false;
-            }
-
-            // INSERT 1
-            $sql = "INSERT INTO avaliar 
-                (batizado, liberar, tipo, perguntas)
-                VALUES (:batizado, :liberar, 'pa', '1')";
-            $stmt = $db->prepare($sql);
-
-            $executado_a = $stmt->execute([
-                ':batizado' => $batizado,
-                ':liberar' => $data['fim']
-            ]);
-
-            // INSERT 2
-            $sql = "INSERT INTO avaliar 
-                (batizado, liberar, tipo, perguntas)
-                VALUES (:batizado, :liberar, 'ap', '1')";
-            $stmt = $db->prepare($sql);
-
-            $executado_b = $stmt->execute([
-                ':batizado' => $batizado,
-                ':liberar' => $data['fim']
-            ]);
-
-            // Validação completa
-            if ($executado_a && $executado_b) {
-                $db->commit();
-                return true;
-            } else {
-                $db->rollBack();
-                return false;
-            }
-
-        } catch (PDOException $e) {
-            // Segurança extra
-            if ($db->inTransaction()) {
-                $db->rollBack();
-            }
-            return false;
-        }
-    }
-    */
 }

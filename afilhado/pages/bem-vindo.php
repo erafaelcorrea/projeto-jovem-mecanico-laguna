@@ -40,7 +40,7 @@
   </div>
   <!-- 🟢 FIM DA LINHA 1   ------->
 <?php
-$padrinhos = retornarLista("SELECT 
+$padrinhos = GlobalModel::retornarUmaLista("SELECT 
             DATE_FORMAT(a.inicio, '%d/%m/%Y') as inicio, 
             DATE_FORMAT(a.fim, '%d/%m/%Y') as fim,
             a.padrinho as padrinho_id, 
@@ -70,7 +70,7 @@ $padrinhos = retornarLista("SELECT
           </div>
           <div class="flex flex-col gap-1">
             <?php 
-              $status = retornarUmValor("SELECT COUNT(*) as total FROM avaliacao WHERE quem_avalia = 'afilhado' AND afilhado_id = {$_SESSION['afilhado']['afilhado_id']} AND padrinho_id = {$padrinho['padrinho_id']} AND liberar <= CURDATE() AND realizada IS NULL");
+              $status = GlobalModel::retornarUmValor("SELECT COUNT(*) as total FROM avaliacao WHERE quem_avalia = 'afilhado' AND afilhado_id = {$_SESSION['afilhado']['afilhado_id']} AND padrinho_id = {$padrinho['padrinho_id']} AND liberar <= CURDATE() AND realizada IS NULL");
             ?>
             <?php if ($status > 0): ?>
               <span class="badge badge-warning font-semibold">

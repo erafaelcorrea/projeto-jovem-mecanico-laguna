@@ -23,5 +23,5 @@
     <img src="assets/img/logo-light.png" style="height:50px;" />
 </div>
 <p class="text-center text-sm mt-4">
-    Esqueceu sua senha? <a href="login.php?pagina=recuperar-senha" class="btn btn-xs btn-neutral" href="../index.php"><i class="fa fa-mail-forward" aria-hidden="true"></i> RECUPERAR</a>
+    Esqueceu sua senha? <a href="login.php?pagina=recuperar-senha" class="btn btn-xs btn-neutral"><i class="fa fa-mail-forward" aria-hidden="true"></i> RECUPERAR</a>
 </p>

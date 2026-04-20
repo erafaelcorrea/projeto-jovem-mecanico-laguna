@@ -1,5 +1,4 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
-
     <!-- 🟦 FORMULÁRIO -->
     <div class="card bg-base-100 shadow-xl">
         <div class="card-body">
@@ -63,17 +62,15 @@
         </div>
     </div>
 
-
     <!-- 🟩 DADOS ANTIGOS -->
     <div class="card bg-base-100 shadow-xl">
         <div class="card-body">
             <div class="avatar indicator">
-                        <span class="indicator-item badge badge-xs badge-neutral">PADRINHO</span>
-                        <div class="w-24 rounded-full">
-                            <img src="../padrinho/assets/img/padrinho-perfil.png" />
-                        </div>
-                    </div>
-
+                <span class="indicator-item badge badge-xs badge-neutral">PADRINHO</span>
+                <div class="w-24 rounded-full">
+                    <img src="../padrinho/assets/img/padrinho-perfil.png" />
+                </div>
+            </div>
         </div>
     </div>
 

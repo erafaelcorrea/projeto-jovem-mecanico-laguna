@@ -30,33 +30,5 @@ ini_set('error_log', __DIR__ . '/logs/php_errors.log');
 date_default_timezone_set('America/Sao_Paulo');
 
 
-/*
-|--------------------------------------------------------------------------
-| HEADERS DE SEGURANÇA
-|--------------------------------------------------------------------------
-*/
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
 
 
-/*
-|--------------------------------------------------------------------------
-| AUTOLOAD SIMPLES (carrega classes automaticamente)
-|--------------------------------------------------------------------------
-*/
-spl_autoload_register(function ($class) {
-
-    $paths = [
-        "controllers/$class.php",
-        "models/$class.php",
-        "core/$class.php"
-    ];
-
-    foreach ($paths as $file) {
-        if (file_exists($file)) {
-            require_once $file;
-            return;
-        }
-    }
-});

@@ -1,10 +1,7 @@
 <?php
-
-require_once 'core/Database.php';
-
 class PadrinhoModel
 {
-    public static function getAll()
+    public static function listarPadrinhos()
     {
         try {
             $db = Database::connect();
@@ -19,7 +16,7 @@ class PadrinhoModel
         }
     }
 
-   public static function getAfilhados($padrinho)
+   public static function afilhadosDoPadrinho($padrinho)
     {
         try {
             $db = Database::connect();
@@ -48,7 +45,7 @@ class PadrinhoModel
         }
     }
 
-    public static function getById($id)
+    public static function padrinho($id)
     {
         try {
             $db = Database::connect();
@@ -64,7 +61,7 @@ class PadrinhoModel
         }
     }
 
-    public static function create($data)
+    public static function adicionarPadrinho($data)
     {
         try {
             $db = Database::connect();
@@ -91,11 +88,12 @@ class PadrinhoModel
             return $db->lastInsertId();
 
         } catch (PDOException $e) {
-            return false;
+            return $e->getMessage();
+            exit;
         }
     }
 
-    public static function update($data)
+    public static function salvarPadrinho($data)
     {
         try {
             $db = Database::connect();
@@ -129,7 +127,7 @@ class PadrinhoModel
         }
     }
 
-    public static function delete($id)
+    public static function excluirPadrinho($id)
     {
         try {
             $db = Database::connect();
@@ -145,7 +143,7 @@ class PadrinhoModel
         }
     }
 
-    public static function login($user, $senha)
+    public static function loginPadrinho($user, $senha)
     {
         try {
             $db = Database::connect();

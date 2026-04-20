@@ -5,7 +5,8 @@ if (isset($_SESSION['afilhado'])) {
     header("Location: index.php?pagina=bem-vindo");
     exit;
 }
-require_once "functions.php";
+require_once __DIR__ . '/../api/functions.php';
+require_once __DIR__ . '/../api/bootstrap.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-theme="light" id="html-tag">
@@ -14,8 +15,8 @@ require_once "functions.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programa Jovem Mecânico</title>
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <link href="../assets/css/daisyui.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
     <style>
@@ -41,29 +42,10 @@ require_once "functions.php";
             $user = $_POST['user'] ?? '';
             $senha = $_POST['senha'] ?? '';
 
-            // chama sua API
-            $url = SERVIDOR . "index.php?url=afilhados/login";
+            $result = AfilhadoModel::loginAfilhado($user, $senha);
 
-            $data = [
-                'user' => $user,
-                'senha' => $senha
-            ];
-
-            $options = [
-                'http' => [
-                    'header'  => "Content-Type: application/x-www-form-urlencoded",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data)
-                ]
-            ];
-
-            $context = stream_context_create($options);
-            $response = file_get_contents($url, false, $context);
-
-            $result = json_decode($response, true);
-
-            if ($result && $result['status'] == 200) {
-                $_SESSION['afilhado'] = $result['data'];
+            if ($result['afilhado_id']) {
+                $_SESSION['afilhado'] = $result;
                 echo "<script>window.location.href = \"index.php?pagina=bem-vindo\";</script>";
 
             } else {

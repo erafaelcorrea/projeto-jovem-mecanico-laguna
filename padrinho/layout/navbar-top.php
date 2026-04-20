@@ -4,9 +4,9 @@
     </label>
 </div>
 
-<div class="flex-1 font-thin text-sm md:text-xl gap-2">
+<div class="flex flex-grow font-thin text-sm md:text-xl gap-4 ml-4">
 <img src="assets/img/logo-laguna.png" id="logo-laguna" style="height:40px;" />
-<span>PROGRAMA JOVEM MECÂNICO</span>
+<span class="mt-2">PROGRAMA JOVEM MECÂNICO</span>
 </div>
 
 <div class="flex-none gap-2">

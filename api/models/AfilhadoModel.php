@@ -1,10 +1,8 @@
 <?php
 
-require_once 'core/Database.php';
-
 class AfilhadoModel
 {
-    public static function getAll()
+    public static function listarAfilhados()
     {
         try {
             $db = Database::connect();
@@ -19,7 +17,7 @@ class AfilhadoModel
         }
     }
 
-   public static function getPadrinhos($afilhado)
+   public static function padrinhosDoAfilhado($afilhado)
     {
         try {
             $db = Database::connect();
@@ -52,7 +50,7 @@ class AfilhadoModel
         }
     }
 
-    public static function getById($id)
+    public static function afilhado($id)
     {
         try {
             $db = Database::connect();
@@ -68,15 +66,15 @@ class AfilhadoModel
         }
     }
 
-    public static function create($data)
+    public static function adicionarAfilhado($data)
     {
         try {
             $db = Database::connect();
 
             $sql = "INSERT INTO afilhados 
-                (nome, matricula, cargo, data_nascimento, sexo, telefone, email, user, senha) 
+                (nome, matricula, data_nascimento, sexo, telefone, email, user, senha) 
                 VALUES 
-                (:nome, :matricula, :cargo, :data_nascimento, :sexo, :telefone, :email, :user, :senha)";
+                (:nome, :matricula, :data_nascimento, :sexo, :telefone, :email, :user, :senha)";
 
             $stmt = $db->prepare($sql);
 
@@ -85,7 +83,6 @@ class AfilhadoModel
 
             $stmt->bindParam(':nome', $data['nome']);
             $stmt->bindParam(':matricula', $data['matricula']);
-            $stmt->bindParam(':cargo', $data['cargo']);
             $stmt->bindParam(':data_nascimento', $data['data_nascimento']);
             $stmt->bindParam(':sexo', $data['sexo']);
             $stmt->bindParam(':telefone', $data['telefone']);
@@ -102,7 +99,7 @@ class AfilhadoModel
         }
     }
 
-    public static function update($id, $data)
+    public static function salvarAfilhado($id, $data)
     {
         try {
             $db = Database::connect();
@@ -137,7 +134,7 @@ class AfilhadoModel
         }
     }
 
-    public static function delete($id)
+    public static function excluirAfilhado($id)
     {
         try {
             $db = Database::connect();
@@ -153,7 +150,7 @@ class AfilhadoModel
         }
     }
 
-    public static function login($user, $senha)
+    public static function loginAfilhado($user, $senha)
     {
         try {
             $db = Database::connect();
